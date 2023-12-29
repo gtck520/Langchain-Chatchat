@@ -1,0 +1,23 @@
+部署过程遇到问题：
+
+1、下载速度问题
+解决：指定阿里源pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple  
+
+有的时候，会出现 ssl 证书问题，我linux服务器有这问题，windows没有
+解决：可以在后面再加上 --trusted-host mirrors.aliyun.com 
+
+
+
+2、 python init_database.py  报错：embeddings_api.py[line:39] - ERROR: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /api/models/BAAI/bge-large-zh (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001B92CDF2800>, 'Connection to huggingface.co timed out. (connect timeout=None)'))"), '(Request ID: ba2a00f2-6eb7-41f2-8617-1436505c0c54)')
+
+解决：
+a、自己建个文件夹，下载 bge-large-zh 模型，放进去
+原地址：git clone https://huggingface.co/BAAI/bge-large-zh
+镜像地址：git clone https://www.modelscope.cn/AI-ModelScope/bge-large-zh.git
+b、configs/model_config.py  将 模型地址 MODEL_ROOT_PATH 改为自己建的文件夹的绝对地址 
+
+如果使用本地部署大模型 chatglm3-6b ，同样处理（显存低于6G就不用想了）
+git clone https://huggingface.co/THUDM/chatglm3-6b  
+$ git clone https://www.modelscope.cn/ZhipuAI/chatglm3-6b.git
+
+
