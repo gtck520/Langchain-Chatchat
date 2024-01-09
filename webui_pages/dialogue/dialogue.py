@@ -142,6 +142,7 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
                         "文件对话",
                         "搜索引擎问答",
                         "自定义Agent问答",
+                        "私人助手",
                         ]
         dialogue_mode = st.selectbox("请选择对话模式：",
                                      dialogue_modes,
@@ -206,6 +207,7 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
             "搜索引擎问答": "search_engine_chat",
             "知识库问答": "knowledge_base_chat",
             "文件对话": "knowledge_base_chat",
+            "私人助手": "personal_chat",
         }
         prompt_templates_kb_list = list(PROMPT_TEMPLATES[index_prompt[dialogue_mode]].keys())
         prompt_template_name = prompt_templates_kb_list[0]
@@ -432,6 +434,33 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
                         chat_box.update_msg(text, element_index=0)
                 chat_box.update_msg(text, element_index=0, streaming=False)
                 chat_box.update_msg("\n\n".join(d.get("docs", [])), element_index=1, streaming=False)
+            elif dialogue_mode == "私人助手":
+                chat_box.ai_say("正在从助手脑袋瓜中获取信息...")
+                text = ""
+                message_id = ""
+                r = api.personal_chat(prompt,
+                                history=history,
+                                conversation_id=conversation_id,
+                                model=llm_model,
+                                prompt_name=prompt_template_name,
+                                temperature=temperature)
+                for t in r:
+                    if error_msg := check_error_msg(t):  # check whether error occured
+                        st.error(error_msg)
+                        break
+                    text += t.get("text", "")
+                    chat_box.update_msg(text)
+                    message_id = t.get("message_id", "")
+
+                metadata = {
+                    "message_id": message_id,
+                    }
+                chat_box.update_msg(text, streaming=False, metadata=metadata)  # 更新最终的字符串，去除光标
+                chat_box.show_feedback(**feedback_kwargs,
+                                    key=message_id,
+                                    on_submit=on_feedback,
+                                    kwargs={"message_id": message_id, "history_index": len(chat_box.history) - 1})
+
 
     if st.session_state.get("need_rerun"):
         st.session_state["need_rerun"] = False
