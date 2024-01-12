@@ -50,7 +50,7 @@ nightwind,晚上风向
 daypower,白天风力
 nightpower,晚上风力
 
-服务示例
+请求示例
 https://restapi.amap.com/v3/weather/weatherInfo?city=110101&key=56bb5fa893b59525765b9bd032dc646a
 参数	值	  备注	     必选
 city  110101 需要查询天气的城市编码。	否"""

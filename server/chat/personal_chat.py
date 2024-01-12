@@ -92,7 +92,7 @@ async def personal_chat(query: str = Body(..., description="用户输入", examp
 
         # Begin a task that runs in the background.
         task = asyncio.create_task(wrap_done(
-            chain_new.acall({"question": query},callbacks=callbacks,include_run_info=True),
+            chain_new.arun({"question": query},callbacks=callbacks,include_run_info=True),
             callback.done),
         )
 
