@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from configs import LLM_MODELS, TEMPERATURE
 from server.utils import wrap_done, get_ChatOpenAI
 from langchain.chains import LLMChain
+from langchain.chains import APIChain
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from typing import AsyncIterable
 import asyncio
@@ -15,6 +16,7 @@ from server.utils import get_prompt_template
 from server.memory.conversation_db_buffer_memory import ConversationBufferDBMemory
 from server.db.repository import add_message_to_db
 from server.callback_handler.conversation_callback_handler import ConversationCallbackHandler
+from server.ext_api import test
 
 
 async def personal_chat(query: str = Body(..., description="用户输入", examples=["恼羞成怒"]),
@@ -77,11 +79,20 @@ async def personal_chat(query: str = Body(..., description="用户输入", examp
             input_msg = History(role="user", content=prompt_template).to_msg_template(False)
             chat_prompt = ChatPromptTemplate.from_messages([input_msg])
 
-        chain = LLMChain(prompt=chat_prompt, llm=model, memory=memory)
+        api_response_template = get_prompt_template("personal_chat", prompt_name)
+        api_response_prompt = PromptTemplate.from_template(api_response_template)
+
+        # headers = {"Authorization": f"Bearer {os.environ['TMDB_BEARER_TOKEN']}"}  headers=headers            
+        chain_new = APIChain.from_llm_and_api_docs(llm=model, 
+                                           api_docs=test.TEST_DOCS, 
+                                           verbose=True,
+                                           limit_to_domains=["https://restapi.amap.com"],
+                                           api_response_prompt=api_response_prompt)
+        #   chain = LLMChain(prompt=chat_prompt, llm=model, memory=memory)
 
         # Begin a task that runs in the background.
         task = asyncio.create_task(wrap_done(
-            chain.acall({"input": query}),
+            chain_new.acall({"question": query},callbacks=callbacks,include_run_info=True),
             callback.done),
         )
 

@@ -1,23 +1,25 @@
-²¿Êğ¹ı³ÌÓöµ½ÎÊÌâ£º
+éƒ¨ç½²è¿‡ç¨‹é‡åˆ°é—®é¢˜ï¼š
 
-1¡¢ÏÂÔØËÙ¶ÈÎÊÌâ
-½â¾ö£ºÖ¸¶¨°¢ÀïÔ´pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple  
+1ã€ä¸‹è½½é€Ÿåº¦é—®é¢˜
+è§£å†³ï¼šæŒ‡å®šé˜¿é‡Œæºpip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple  
 
-ÓĞµÄÊ±ºò£¬»á³öÏÖ ssl Ö¤ÊéÎÊÌâ£¬ÎÒlinux·şÎñÆ÷ÓĞÕâÎÊÌâ£¬windowsÃ»ÓĞ
-½â¾ö£º¿ÉÒÔÔÚºóÃæÔÙ¼ÓÉÏ --trusted-host mirrors.aliyun.com 
+æœ‰çš„æ—¶å€™ï¼Œä¼šå‡ºç° ssl è¯ä¹¦é—®é¢˜ï¼Œæˆ‘linuxæœåŠ¡å™¨æœ‰è¿™é—®é¢˜ï¼Œwindowsæ²¡æœ‰
+è§£å†³ï¼šå¯ä»¥åœ¨åé¢å†åŠ ä¸Š --trusted-host mirrors.aliyun.com 
 
 
 
-2¡¢ python init_database.py  ±¨´í£ºembeddings_api.py[line:39] - ERROR: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /api/models/BAAI/bge-large-zh (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001B92CDF2800>, 'Connection to huggingface.co timed out. (connect timeout=None)'))"), '(Request ID: ba2a00f2-6eb7-41f2-8617-1436505c0c54)')
+2ã€ python init_database.py  æŠ¥é”™ï¼šembeddings_api.py[line:39] - ERROR: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /api/models/BAAI/bge-large-zh (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001B92CDF2800>, 'Connection to huggingface.co timed out. (connect timeout=None)'))"), '(Request ID: ba2a00f2-6eb7-41f2-8617-1436505c0c54)')
 
-½â¾ö£º
-a¡¢×Ô¼º½¨¸öÎÄ¼ş¼Ğ£¬ÏÂÔØ bge-large-zh Ä£ĞÍ£¬·Å½øÈ¥
-Ô­µØÖ·£ºgit clone https://huggingface.co/BAAI/bge-large-zh
-¾µÏñµØÖ·£ºgit clone https://www.modelscope.cn/AI-ModelScope/bge-large-zh.git
-b¡¢configs/model_config.py  ½« Ä£ĞÍµØÖ· MODEL_ROOT_PATH ¸ÄÎª×Ô¼º½¨µÄÎÄ¼ş¼ĞµÄ¾ø¶ÔµØÖ· 
+è§£å†³ï¼š
+aã€è‡ªå·±å»ºä¸ªæ–‡ä»¶å¤¹ï¼Œä¸‹è½½ bge-large-zh æ¨¡å‹ï¼Œæ”¾è¿›å»
+åŸåœ°å€ï¼šgit clone https://huggingface.co/BAAI/bge-large-zh
+é•œåƒåœ°å€ï¼šgit clone https://www.modelscope.cn/AI-ModelScope/bge-large-zh.git
+bã€configs/model_config.py  å°† æ¨¡å‹åœ°å€ MODEL_ROOT_PATH æ”¹ä¸ºè‡ªå·±å»ºçš„æ–‡ä»¶å¤¹çš„ç»å¯¹åœ°å€ 
 
-Èç¹ûÊ¹ÓÃ±¾µØ²¿Êğ´óÄ£ĞÍ chatglm3-6b £¬Í¬Ñù´¦Àí£¨ÏÔ´æµÍÓÚ6G¾Í²»ÓÃÏëÁË£©
+å¦‚æœä½¿ç”¨æœ¬åœ°éƒ¨ç½²å¤§æ¨¡å‹ chatglm3-6b ï¼ŒåŒæ ·å¤„ç†ï¼ˆæ˜¾å­˜ä½äº6Gå°±ä¸ç”¨æƒ³äº†ï¼‰
 git clone https://huggingface.co/THUDM/chatglm3-6b  
 $ git clone https://www.modelscope.cn/ZhipuAI/chatglm3-6b.git
 
 
+å¦‚æœéœ€è¦ä½¿ç”¨æ™ºè°±apiï¼Œéœ€è¦å»æ™ºè°±å®˜ç½‘æ³¨å†Œè´¦å·ï¼Œç„¶åæŠŠapi_key å¡«å…¥ configs/model_config.py
+pip install zhipuai -i https://pypi.tuna.tsinghua.edu.cn/simple
