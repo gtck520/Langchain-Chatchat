@@ -1,5 +1,5 @@
 name: search_api
-description: Use this tool to search for suitable interfaces and information from known API documentation
+description: When no matching tool is found, use this tool to search for suitable interfaces from known API documentation to obtain information
 parameters:
   type: object
   properties:

@@ -53,4 +53,5 @@ nightpower,晚上风力
 请求示例
 https://restapi.amap.com/v3/weather/weatherInfo?city=110101&key=56bb5fa893b59525765b9bd032dc646a
 参数	值	  备注	     必选
-city  110101 需要查询天气的城市编码。	否"""
+city  110101 需要查询天气的城市编码。	否
+注意，如果用户输入的是中文，需要将其转换为对应的城市编码，才能正常请求。"""

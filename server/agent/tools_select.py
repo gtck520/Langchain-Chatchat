@@ -16,12 +16,12 @@ tools = [
         description="A wrapper around Arxiv.org for searching and retrieving scientific articles in various fields.",
         args_schema=ArxivInput,
     ),
-    Tool.from_function(
-        func=weathercheck,
-        name="weather_check",
-        description="",
-        args_schema=WhetherSchema,
-    ),
+    # Tool.from_function(
+    #     func=weathercheck,
+    #     name="weather_check",
+    #     description="",
+    #     args_schema=WhetherSchema,
+    # ),
     Tool.from_function(
         func=shell,
         name="shell",
@@ -34,16 +34,16 @@ tools = [
         description="Use Use this tool to search local knowledgebase and get information",
         args_schema=KnowledgeSearchInput,
     ),
-    Tool.from_function(
-        func=search_internet,
-        name="search_internet",
-        description="Use this tool to use bing search engine to search the internet",
-        args_schema=SearchInternetInput,
-    ),
+    # Tool.from_function(
+    #     func=search_internet,
+    #     name="search_internet",
+    #     description="Use this tool to use bing search engine to search the internet",
+    #     args_schema=SearchInternetInput,
+    # ),
     Tool.from_function(
         func=search_api,
         name="search_api",
-        description="Use this tool to search for suitable interfaces and information from known API documentation",
+        description="When no matching tool is found, use this tool to search for suitable interfaces from known API documentation to obtain information",
         args_schema=SearchApiInput,
     ),
     Tool.from_function(
