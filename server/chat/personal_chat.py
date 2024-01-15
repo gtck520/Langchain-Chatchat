@@ -1,3 +1,4 @@
+from urllib import response
 from fastapi import Body
 from fastapi.responses import StreamingResponse
 from configs import LLM_MODELS, TEMPERATURE
@@ -91,25 +92,9 @@ async def personal_chat(query: str = Body(..., description="用户输入", examp
         #   chain = LLMChain(prompt=chat_prompt, llm=model, memory=memory)
 
         # Begin a task that runs in the background.
-        task = asyncio.create_task(wrap_done(
-            chain_new.arun({"question": query},callbacks=callbacks,include_run_info=True),
-            callback.done),
-        )
-
-        if stream:
-            async for token in callback.aiter():
-                # Use server-sent-events to stream the response
-                yield json.dumps(
-                    {"text": token, "message_id": message_id},
-                    ensure_ascii=False)
-        else:
-            answer = ""
-            async for token in callback.aiter():
-                answer += token
-            yield json.dumps(
-                {"text": answer, "message_id": message_id},
-                ensure_ascii=False)
-
-        await task
+        answer = await chain_new.arun({"question": query})        
+        yield json.dumps(
+                    {"text": answer, "message_id": "message_id"},
+                    ensure_ascii=False)       
 
     return StreamingResponse(chat_iterator(), media_type="text/event-stream")

@@ -6,6 +6,7 @@ from .calculate import calculate, CalculatorInput
 from .weather_check import weathercheck, WhetherSchema
 from .shell import shell, ShellInput
 from .search_internet import search_internet, SearchInternetInput
+from .search_api import search_api, SearchApiInput
 from .wolfram import wolfram, WolframInput
 from .search_youtube import search_youtube, YoutubeInput
 from .arxiv import arxiv, ArxivInput

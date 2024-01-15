@@ -41,6 +41,12 @@ tools = [
         args_schema=SearchInternetInput,
     ),
     Tool.from_function(
+        func=search_api,
+        name="search_api",
+        description="Use this tool to search for suitable interfaces and information from known API documentation",
+        args_schema=SearchApiInput,
+    ),
+    Tool.from_function(
         func=wolfram,
         name="Wolfram",
         description="Useful for when you need to calculate difficult formulas",

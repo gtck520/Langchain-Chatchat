@@ -1,0 +1,10 @@
+name: search_api
+description: Use this tool to search for suitable interfaces and information from known API documentation
+parameters:
+  type: object
+  properties:
+    query:
+      type: string
+      description: Query for api search
+required:
+  - query

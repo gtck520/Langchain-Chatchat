@@ -37,22 +37,12 @@ async def main():
         #     "福州今天天气如何"
         # ))
 
-        callback = AsyncFinalIteratorCallbackHandler(answer_prefix_tokens=["根据"])
-        task = asyncio.create_task(wrap_done(
-                chain_new.acall({"question": "福州今天天气如何"},include_run_info=True),
-                callback.done),
-            )
-
-        answer = ""
-        async for token in callback.aiter():
-            print(token)
-            answer += token
-            yield json.dumps(
-            {"text": answer, "message_id": "message_id"},
-            ensure_ascii=False)
-        await task
-    async for chunk in chat_iterator():        
-        await print(chunk)
+        answer = await chain_new.arun({"question": "福州今天天气如何"})
+        return json.dumps(
+                    {"text": answer, "message_id": "message_id"},
+                    ensure_ascii=False) 
+    
+    print(await chat_iterator())
     
 if __name__ == "__main__":
     asyncio.run(main())
