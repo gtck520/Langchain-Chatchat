@@ -26,5 +26,5 @@ class SearchApiInput(BaseModel):
 
 
 if __name__ == "__main__":
-    result = search_api("明天福州天气")
+    result = search_api("陈康的用户信息，结果使用表格输出")
     print("答案:",result)

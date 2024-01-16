@@ -5,6 +5,6 @@ parameters:
   properties:
     query:
       type: string
-      description: Query for api search
+      description: the name for search please use chinese
 required:
   - query

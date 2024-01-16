@@ -17,7 +17,7 @@ from server.utils import get_prompt_template
 from server.memory.conversation_db_buffer_memory import ConversationBufferDBMemory
 from server.db.repository import add_message_to_db
 from server.callback_handler.conversation_callback_handler import ConversationCallbackHandler
-from server.ext_api import test
+from server.ext_api import test,payment
 
 
 async def personal_chat(query: str = Body(..., description="用户输入", examples=["恼羞成怒"]),
@@ -47,15 +47,28 @@ async def personal_chat(query: str = Body(..., description="用户输入", examp
             callbacks=callbacks,
         )
 
-        api_response_template = get_prompt_template("personal_chat", "default")
+
+        api_url_template = get_prompt_template("personal_chat", "url")
+        api_url_prompt = PromptTemplate.from_template(api_url_template)
+        
+        api_response_template = get_prompt_template("personal_chat", "response")
         api_response_prompt = PromptTemplate.from_template(api_response_template)
 
-        # headers = {"Authorization": f"Bearer {os.environ['TMDB_BEARER_TOKEN']}"}  headers=headers            
+        headers = {"api-key":"7leVZ5NZ6WNhyr4WwIczKfdqvNC_2doq"}             
         chain_new = APIChain.from_llm_and_api_docs(llm=model, 
-                                           api_docs=test.TEST_DOCS, 
+                                           api_docs=payment.PAYMENT_DOCS, 
                                            verbose=True,
-                                           limit_to_domains=["https://restapi.amap.com"],
-                                           api_response_prompt=api_response_prompt)
+                                           limit_to_domains=["http://127.0.0.1:8080"],
+                                           headers=headers,
+                                           api_response_prompt=api_response_prompt,
+                                           api_url_prompt=api_url_prompt)
+        
+        # 无header的
+        # chain_new = APIChain.from_llm_and_api_docs(llm=model, 
+        #                                    api_docs=test.TEST_DOCS, 
+        #                                    verbose=True,
+        #                                    limit_to_domains=["https://restapi.amap.com"],
+        #                                    api_response_prompt=api_response_prompt)
         #   chain = LLMChain(prompt=chat_prompt, llm=model, memory=memory)
 
         # Begin a task that runs in the background.
